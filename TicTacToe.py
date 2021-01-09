@@ -1,17 +1,37 @@
-import pygame,sys,os,random
+import pip
+import sys,os,random
 from time import *
 
-os.environ['SDL_VIDEO_WINDOW_POS']='400,80'
-  
+#Installing Pygame module on systems, it is not already present
+
+def install(package):
+    pip.main(['install', package])
+
+try:
+    import pygame
+except ImportError:
+    install('pygame')
+    import pygame
+
+#Opening the game window at a particular position on the screen
+
+os.environ['SDL_VIDEO_WINDOW_POS']='400,80' 
+
+#Displaying the game screen
+
 pygame.init()
 win=pygame.display.set_mode((600,600))
 pygame.display.set_caption('TicTacToe')
 win.fill((255,255,255))
 
+#All the functions of Vs Player mode
+
 class TicTacToe1:
 
     def __init__(self,m):
         self.m=m
+        
+    #all the buttons design
         
     def button(self,action=None,action1=None):
         a=0
@@ -74,6 +94,8 @@ class TicTacToe1:
                 self.Font()
                 pygame.display.update()
 
+    #font of restart and quit button
+                
     def Font(self):
         text1=font1.render('Restart',1,(255,255,255))
         win.blit(text1, (107,410))
@@ -81,7 +103,8 @@ class TicTacToe1:
         win.blit(text1, (423,410))
 
 
-    
+    #drawing the board
+        
     def Draw(self):
         x=0
         y=0
@@ -93,15 +116,21 @@ class TicTacToe1:
             y+=200
             pygame.display.update()
 
+    #Design for Circles of TicTacToe
+            
     def Circle(self,i,j):
         pygame.draw.circle(win,(0,0,255),(100+200*j,100+200*i),80,4)
         pygame.display.update()
 
+    #Design for Crosses of TicTacToe
+    
     def Cross(self,i,j):
         pygame.draw.line(win,(255,0,0),[30+200*j,30+200*i],[170+200*j,170+200*i],6)
         pygame.draw.line(win,(255,0,0),[30+200*j,170+200*i],[170+200*j,30+200*i],6)
         pygame.display.update()
 
+    #All the mouse movements for Player 1
+    
     def Move(self):
         mov=0
         a=0
@@ -129,6 +158,8 @@ class TicTacToe1:
                     else:
                         continue
 
+    #All the mouse movements of Player 2
+    
     def Move1(self):
         mov=0
         a=0
@@ -156,12 +187,16 @@ class TicTacToe1:
                     else:
                         continue
 
+    #Checking if the clicked position is empty or not
+    
     def check(self,i,j):
         if((m[i][j]=='O')|(m[i][j]=='X')):
             return False
         else:
             return True
-        
+
+    #Checking if Player 1 won or not
+      
     def win(self):
         sleep(0.5)
         if(((m[0][0]=='O')&(m[0][1]=='O')&(m[0][2]=='O'))|((m[1][0]=='O')&(m[1][1]=='O')&(m[1][2]=='O'))|((m[2][0]=='O')&(m[2][1]=='O')&(m[2][2]=='O'))|((m[0][0]=='O')&(m[1][0]=='O')&(m[2][0]=='O'))|((m[0][1]=='O')&(m[1][1]=='O')&(m[2][1]=='O'))|((m[0][2]=='O')&(m[1][2]=='O')&(m[2][2]=='O'))|((m[0][0]=='O')&(m[1][1]=='O')&(m[2][2]=='O'))|((m[0][2]=='O')&(m[1][1]=='O')&(m[2][0]=='O'))):
@@ -172,6 +207,8 @@ class TicTacToe1:
             pygame.display.update()
             self.button('play','quit')
             
+    #Checking if Player 2 won or not
+
     def win1(self):
         sleep(0.5)
         if(((m[0][0]=='X')&(m[0][1]=='X')&(m[0][2]=='X'))|((m[1][0]=='X')&(m[1][1]=='X')&(m[1][2]=='X'))|((m[2][0]=='X')&(m[2][1]=='X')&(m[2][2]=='X'))|((m[0][0]=='X')&(m[1][0]=='X')&(m[2][0]=='X'))|((m[0][1]=='X')&(m[1][1]=='X')&(m[2][1]=='X'))|((m[0][2]=='X')&(m[1][2]=='X')&(m[2][2]=='X'))|((m[0][0]=='X')&(m[1][1]=='X')&(m[2][2]=='X'))|((m[0][2]=='X')&(m[1][1]=='X')&(m[2][0]=='X'))):
@@ -183,6 +220,8 @@ class TicTacToe1:
             self.button('play','quit')
                         
 
+    #Draw
+    
     def Equal(self):
         sleep(0.5)
         win.fill((255,255,255))   
@@ -192,6 +231,8 @@ class TicTacToe1:
         pygame.display.update()
         self.button('play','quit')
 
+    #Main function of Vs Player Mode
+    
     def Main(self):
         win.fill((255,255,255))   
         pygame.display.update()
@@ -224,11 +265,14 @@ class TicTacToe1:
         self.Move()
         self.Equal()
 
+#All the functions of Vs Computer mode
 
 class TicTacToe:
 
     def __init__(self,m):
         self.m=m
+
+    #all the buttons design
         
     def button(self,action=None,action1=None):
         a=0
@@ -290,12 +334,16 @@ class TicTacToe:
                 self.Font()
                 pygame.display.update()
 
+    #font of restart and quit button
+    
     def Font(self):
         text1=font1.render('Restart',1,(255,255,255))
         win.blit(text1, (107,410))
         text1=font1.render('Quit',1,(255,255,255))
         win.blit(text1, (423,410))
 
+    #Choosing level
+        
     def Level(self,action=None,action1=None):
         a=0
         s.clear()
@@ -345,12 +393,16 @@ class TicTacToe:
                 self.Font1()
                 pygame.display.update()
 
+    #Font of easy and hard levels
+        
     def Font1(self):
         text1=font1.render('Easy',1,(255,255,255))
         win.blit(text1, (120,410))
         text1=font1.render('Hard',1,(255,255,255))
         win.blit(text1, (423,410))
 
+
+    #drawing the board
     
     def Draw(self):
         x=0
@@ -363,14 +415,20 @@ class TicTacToe:
             y+=200
             pygame.display.update()
 
+    #Design for Circles of TicTacToe
+
     def Circle(self,i,j):
         pygame.draw.circle(win,(0,0,255),(100+200*j,100+200*i),80,4)
         pygame.display.update()
+
+    #Design for Crosses of TicTacToe
 
     def Cross(self,i,j):
         pygame.draw.line(win,(255,0,0),[30+200*j,30+200*i],[170+200*j,170+200*i],6)
         pygame.draw.line(win,(255,0,0),[30+200*j,170+200*i],[170+200*j,30+200*i],6)
         pygame.display.update()
+
+    #All the mouse movements
 
     def Move(self):
         mov=0
@@ -399,13 +457,16 @@ class TicTacToe:
                         a=-1
                     else:
                         continue
-                    
+
+    #Checking if the clicked position is empty or not                
 
     def check(self,i,j):
         if((m[i][j]=='O')|(m[i][j]=='X')):
             return False
         else:
             return True
+
+    #Checking if Player won or not
         
     def win(self):
         sleep(0.5)
@@ -416,6 +477,8 @@ class TicTacToe:
             win.blit(text1, (300 - (text1.get_width()//2),(300 - (text1.get_height()//2))))
             pygame.display.update()
             self.button('play','quit')
+
+    #Checking if Player lost
             
     def loss(self):
         sleep(0.5)
@@ -426,6 +489,8 @@ class TicTacToe:
             win.blit(text1, (300 - (text1.get_width()//2),(300 - (text1.get_height()//2))))
             pygame.display.update()
             self.button('play','quit')
+
+    #Deciding the computer move through hard coding
                         
     def compMove(self):
         sleep(1)
@@ -539,6 +604,8 @@ class TicTacToe:
         self.Cross(i,j) 
         self.loss()
 
+    #Draw  
+
     def Equal(self):
         sleep(0.5)
         win.fill((255,255,255))   
@@ -547,6 +614,8 @@ class TicTacToe:
         win.blit(text1, (300 - (text1.get_width()//2),(300 - (text1.get_height()//2))))
         pygame.display.update()
         self.button('play','quit')
+
+    #Main function of Vs Computer Mode
 
     def Main(self):
         win.fill((255,255,255))   
@@ -578,6 +647,8 @@ class TicTacToe:
         self.compMove()
         self.Move()
         self.Equal()
+
+#button for vs player or vs computer
 
 def opt(action=None,action1=None):
     a=0
@@ -628,15 +699,19 @@ def opt(action=None,action1=None):
             Font2()
             pygame.display.update()
 
+#Vs Player and Vs Computer font
+
 def Font2():
     text1=font1.render('Vs Player',1,(255,255,255))
     win.blit(text1, (125,420))
     text1=font1.render('Vs Comp',1,(255,255,255))
     win.blit(text1, (425,420))
 
+#Main Program 
+
 font=pygame.font.SysFont('cambria', 50)
 font1=pygame.font.SysFont('cambria', 25)
-m=[['1','1','1'],['1','1','1'],['1','1','1']]  
+m=[['1','1','1'],['1','1','1'],['1','1','1']]
 s=[]
 d=[]
 ob=TicTacToe(m)
@@ -660,6 +735,7 @@ if(d[0]=='Comp'):
     ob.Main()
 else:
     obj.Main()
+    
 #MAIN LOOP
 a=True
 while(a):
